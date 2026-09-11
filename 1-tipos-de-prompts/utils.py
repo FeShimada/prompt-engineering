@@ -17,11 +17,11 @@ def print_llm_result(prompt, response):
     console.print(Text(response.content, style="bold blue"), end="\n\n")
 
     # Print token usage
-    usage = response.response_metadata['token_usage']
+    usage = response.usage_metadata
     console.print(
-        f"[bold white]Input tokens:[/bold white] [bright_black]{usage['prompt_tokens']}[/bright_black]")
+        f"[bold white]Input tokens:[/bold white] [bright_black]{usage['input_tokens']}[/bright_black]")
     console.print(
-        f"[bold white]Output tokens:[/bold white] [bright_black]{usage['completion_tokens']}[/bright_black]")
+        f"[bold white]Output tokens:[/bold white] [bright_black]{usage['output_tokens']}[/bright_black]")
     console.print(
         f"[bold white]Total tokens:[/bold white] [bright_black]{usage['total_tokens']}[/bright_black]")
     console.print(f"[yellow]{'-'*50} [/yellow]")
