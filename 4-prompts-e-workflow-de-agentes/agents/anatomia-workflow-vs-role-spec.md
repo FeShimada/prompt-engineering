@@ -10,6 +10,7 @@
 - Tratamento de ambiguidades e "assumptions"
 - Instruções negativas
 - Tratamento de erros
+- workflow (opcional)
 
 ## Workflow Specification Prompt (Commands)
 
