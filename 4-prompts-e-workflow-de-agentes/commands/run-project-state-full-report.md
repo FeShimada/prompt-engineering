@@ -1,7 +1,10 @@
 ---
-allowed-tools: Task, Read, Write, TodoWrite
 description: Run a full report of the project state including dependencies, architecture, components and etc.
-required-agents: orchestrator, dependency-auditor, architectural-analyzer, component-deep-analyzer
+argument-hint: "[--project-folder=<path>] [--output-folder=<path>] [--ignore-folders=<a,b,c>]"
+allowed-tools: Agent, Read, Write, TaskCreate, TaskUpdate
+model: claude-opus-5-5
+metadata:
+  required-agents: orchestrator, dependency-auditor, architectural-analyzer, component-deep-analyzer
 ---
 # Project State Full Report
 
@@ -55,47 +58,47 @@ Generated on: YYYY-MM-DD HH:MM:SS
 
 ### MANDATORY AGENT SEPARATION
 
-* Each agent MUST be invoked with a separate Task tool call
+* Each agent MUST be invoked with a separate Agent tool call
 * The orchestrator MUST NOT be asked to spawn sub-agents itself
 * YOU (Claude Code) are the coordinator, NOT the orchestrator agent
-* All communication flows through YOU as the coordinator. YOU decide which new agents to start. After any agent finishes, YOU MUST trigger the orchestrator to update MANIFEST.md. In practice, this means calling Task(orchestrator) once per completed agent task so it can append the entry (title, absolute path rooted at /, agent, timestamp). Example: when Task(architectural-analyzer) completes, immediately invoke Task(orchestrator) to record the Architecture Report in MANIFEST.md.
+* All communication flows through YOU as the coordinator. YOU decide which new agents to start. After any agent finishes, YOU MUST trigger the orchestrator to update MANIFEST.md. In practice, this means calling Agent(orchestrator) once per completed agent task so it can append the entry (title, absolute path rooted at /, agent, timestamp). Example: when Agent(architectural-analyzer) completes, immediately invoke Agent(orchestrator) to record the Architecture Report in MANIFEST.md.
 
 ## Execution Workflow
 
-**Phase 1: Task(orchestrator)**
+**Phase 1: Agent(orchestrator)**
 
 1. Read user flags and normalize paths. Respect --project-folder and --output-folder when provided. If not provided, use the default locations defined by the orchestrator specification
 2. Create only the directories required by the orchestrator specification. Do not invent extra levels like output or reports unless the orchestrator specification itself requires them
 3. Apply ignore list before any file reading. Never parse or scan files inside any folder listed in --ignore-folders
 4. Initialize **MANIFEST.md** in the orchestrator directory with an empty index structure (title, absolute path, agent, timestamp).
 
-**Phase 2: Task(dependency-auditor) and Task(architectural-analyzer) in parallel**
+**Phase 2: Agent(dependency-auditor) and Agent(architectural-analyzer) in parallel**
 
-1. Task(dependency-auditor) produces a complete dependency report following its agent specification.
+1. Agent(dependency-auditor) produces a complete dependency report following its agent specification.
    Important: For dependency validation within this Task, use MCP servers such as Context7 and Firecrawl to verify versions, maintenance status, and known vulnerabilities.
-2. Task(architectural-analyzer) produces a complete **Architecture Report** following its agent specification.
+2. Agent(architectural-analyzer) produces a complete **Architecture Report** following its agent specification.
    Important: ONLY the orchestrator appends to **MANIFEST.md** when each Task completes.
 
-**Phase 3: Task(component-deep-analyzer) in parallel, one per component**
+**Phase 3: Agent(component-deep-analyzer) in parallel, one per component**
 
 1. Parse the **Architecture Report** from Phase 2, treating it as an artifact produced by the architectural-analyzer.
 
-2. For each component listed in the **Architecture Report** (for example, in the "Critical Components Analysis" section or any section that enumerates components), launch a separate Task(component-deep-analyzer) for that component, in parallel.
+2. For each component listed in the **Architecture Report** (for example, in the "Critical Components Analysis" section or any section that enumerates components), launch a separate Agent(component-deep-analyzer) for that component, in parallel.
 
-3. Each Task(component-deep-analyzer) MUST fully analyze only its assigned component and produce an individual report.
+3. Each Agent(component-deep-analyzer) MUST fully analyze only its assigned component and produce an individual report.
 
-4. Coverage requirement and example: if the **Architecture Report** lists 10 components, YOU MUST launch 10 parallel Task(component-deep-analyzer) executions and produce 10 corresponding component reports. No component may be skipped. 
+4. Coverage requirement and example: if the **Architecture Report** lists 10 components, YOU MUST launch 10 parallel Agent(component-deep-analyzer) executions and produce 10 corresponding component reports. No component may be skipped. 
 
-5. After all Task(component-deep-analyzer) executions complete, YOU MUST verify that every component has a corresponding report. Reopen the **Architecture Report** and review its component sections line by line. If any component lacks a report, launch additional Task(component-deep-analyzer) executions for the missing components until coverage is 100%. 
+5. After all Agent(component-deep-analyzer) executions complete, YOU MUST verify that every component has a corresponding report. Reopen the **Architecture Report** and review its component sections line by line. If any component lacks a report, launch additional Agent(component-deep-analyzer) executions for the missing components until coverage is 100%. 
 
 IMPORTANT: Make sure to DO NOT duplicate any report, so, **ultrathink** if the report already exists before create a new one with a different or similar name, timestamp, etc. YOU MUST BE extremely precise with this verification.
 
-**Phase 4: Task(orchestrator)**
+**Phase 4: Agent(orchestrator)**
 
 1. Aggregate references to all generated reports
 2. FINALIZE **MANIFEST.md** inside the orchestrator agent directory: validate all entries, ensure titles and absolute paths exist, de-duplicate, confirm agent names and timestamps.
 
-**Phase 5: Task(YOU)**
+**Phase 5: YOU (the coordinator, no agent call)**
 
 1. Read MANIFEST.md from the orchestrator directory. Build the index using report titles and absolute links that start with a single slash
 2. Validate each link before writing. Use the link validation algorithm defined below
@@ -163,7 +166,7 @@ FOLLOW EXACTLY the output pattern defined below.
    * Forbidden: ad-hoc directories like "reports", "output", "tmp" unless they are explicitly defined.
    * All outputs must follow `<output-folder>/<agent-name>/<file-name-provided-by-agent>.md` or be stored in the orchestrator directory as specified.
 
-8. NEVER duplicate a report. If you have to make any chances, edit the report that already exists instead of create a new one
+9. NEVER duplicate a report. If you have to make any chances, edit the report that already exists instead of create a new one
     * Forbidden: duplicate a "component-analysis" report during the review if all reports exists.
 
 ## Observations
