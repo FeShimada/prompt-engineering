@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 from utils import print_llm_result
 
@@ -56,9 +56,7 @@ Think in a Tree of Thought manner:
 - Finish with "Final Answer: " + the 3 chosen powers.
 """
 
-# llm = ChatOllama(model="ollama-gpt-3")
-llm = ChatOllama(model="llama3.1")
-# llm = ChatOllama(model="ollama-gpt-5-nano") # reasoning model
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 
 
 # response1 = llm.invoke(msg1)

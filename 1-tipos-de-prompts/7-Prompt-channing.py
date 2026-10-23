@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOllama(model="llama3.1", temperature=0)
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 
 
 spec_to_model = PromptTemplate.from_template(
@@ -70,7 +70,7 @@ result_content = f"""# Prompt Chaining Result
 {commit}
 
 ---
-**Pipeline Model:** llama3.1 (all steps)
+**Pipeline Model:** claude-opus-5-5 (all steps)
 
 """
 

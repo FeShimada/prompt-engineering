@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 from utils import print_llm_result
 
@@ -54,9 +54,7 @@ Powers must scale with rarity: higher rarities unlock new mechanics, not just bi
 Keep the final catalog structured and easy to read.
 """
 
-# llm = ChatOllama(model="ollama-gpt-3")
-llm = ChatOllama(model="llama3.1")
-# llm = ChatOllama(model="ollama-gpt-5-nano") # reasoning model
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 
 
 response1 = llm.invoke(msg1)

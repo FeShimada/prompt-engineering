@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 from utils import print_llm_result
 
@@ -13,7 +13,7 @@ I'm looking for a restaurant around São Paulo who has a good rating for Japanes
 msg3 = "What's Brazil's capital? Respond only with the city name."
 
 
-llm = ChatOllama(model="llama3.1")
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 response1 = llm.invoke(msg1)
 response2 = llm.invoke(msg2)
 response3 = llm.invoke(msg3)

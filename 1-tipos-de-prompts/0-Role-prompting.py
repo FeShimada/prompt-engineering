@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from langchain.prompts import ChatPromptTemplate
 from utils import print_llm_result
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ chat_prompt = ChatPromptTemplate([system, user])
 chat_prompt2 = ChatPromptTemplate([system2, user])
 messages = chat_prompt.format_messages()
 
-model = ChatOllama(model="llama3.1")
+model = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 result = model.invoke(messages)
 print_llm_result(str(system), result)
 

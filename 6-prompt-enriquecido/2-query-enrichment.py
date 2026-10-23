@@ -16,8 +16,7 @@ load_dotenv()
 @dataclass
 class EnrichmentConfig:
     """Configuration for query enrichment"""
-    model_name: str = "openai:gpt-4o-mini"
-    temperature: float = 0.0
+    model_name: str = "anthropic:claude-opus-5-5"
     max_rounds: int = 10
 
     # Define what information we want to collect
@@ -56,8 +55,7 @@ class QueryEnricher:
 
     def __init__(self, config: EnrichmentConfig):
         self.config = config
-        self.llm = init_chat_model(
-            config.model_name, temperature=config.temperature)
+        self.llm = init_chat_model(config.model_name, max_tokens=16000)
         self.enrichment_chain = self._create_enrichment_chain()
         self.rewrite_chain = self._create_rewrite_chain()
 

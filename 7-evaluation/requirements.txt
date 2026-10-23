@@ -26,7 +26,7 @@ jsonschema-specifications==2025.9.1
 langchain==0.3.27
 langchain-community==0.3.30
 langchain-core==0.3.77
-langchain-openai==0.3.34
+langchain-anthropic==0.3.19
 langchain-text-splitters==0.3.11
 langfuse==3.6.1
 langsmith==0.4.32
@@ -36,7 +36,7 @@ mdurl==0.1.2
 multidict==6.6.4
 mypy_extensions==1.1.0
 numpy==2.3.3
-openai==2.1.0
+anthropic==0.125.0
 openevals==0.1.0
 opentelemetry-api==1.37.0
 opentelemetry-exporter-otlp-proto-common==1.37.0

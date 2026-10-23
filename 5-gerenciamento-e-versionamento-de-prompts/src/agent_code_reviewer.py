@@ -46,7 +46,7 @@ prompt = registry.get_prompt("agent-code-reviewer")
 prompt_template = load_prompt(prompt.path, encoding="utf-8")
 
 # Create the model using init_chat_model (LangChain 1.0 recommended way)
-llm = init_chat_model("gpt-4o-mini")
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 
 # Create simple chain: prompt -> llm -> parser
 chain = prompt_template | llm | StrOutputParser()

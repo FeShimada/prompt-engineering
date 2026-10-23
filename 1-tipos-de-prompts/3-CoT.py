@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 from utils import print_llm_result
 
@@ -30,8 +30,7 @@ Explain step by step by breaking down each letter in bullet points, pointing out
 Give the final result after "Answer:".
 """
 
-# llm = ChatOllama(model="llama3.1")
-llm = ChatOllama(model="deepseek-r1:8b", reasoning=True)  # reasoning model
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000, thinking={"type": "adaptive"})  # reasoning model
 
 
 response1 = llm.invoke(msg1)

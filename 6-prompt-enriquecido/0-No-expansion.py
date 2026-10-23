@@ -5,7 +5,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.7)
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 
 prompt = PromptTemplate(
     input_variables=["question"],

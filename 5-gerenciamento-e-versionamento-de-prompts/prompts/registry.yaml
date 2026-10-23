@@ -3,10 +3,10 @@ agents:
     description: "Agente especializado em revisão rigorosa de código"
     current_version: "1.0.0"
     path: "agent-code-reviewer/v1.0.0/prompt.yaml"
-    model: gpt-5-nano
+    model: claude-opus-5-5
 
   agent-pull-request-creator:
     description: "Agente para criação de pull requests profissionais"
     current_version: "1.0.1"
     path: "agent-pull-request-creator/v1.0.1/prompt.yaml"
-    model: gpt-5-nano
+    model: claude-opus-5-5

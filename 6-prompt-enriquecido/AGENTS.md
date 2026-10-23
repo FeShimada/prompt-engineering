@@ -11,7 +11,7 @@ This chapter demonstrates advanced prompt enrichment techniques to improve LLM r
 **Required Environment Variables** (in `.env`):
 
 ```bash
-OPENAI_API_KEY=your-api-key-here
+ANTHROPIC_API_KEY=your-api-key-here
 ```
 
 **Virtual Environment Setup**:
@@ -28,10 +28,10 @@ pip install -r requirements.txt
 **Key Dependencies:**
 - `langchain==1.0.0a5` - LangChain framework (ALPHA version with new APIs)
 - `langchain-core==0.3.76` - Core LangChain abstractions
-- `langchain-openai==0.3.33` - OpenAI integration
+- `langchain-anthropic==0.3.19` - Anthropic integration
 - `langgraph==0.6.7` - Graph-based workflows
 - `langsmith==0.4.29` - LangSmith tracing and evaluation
-- `openai==1.108.0` - OpenAI API client
+- `anthropic==0.125.0` - Anthropic API client
 - `python-dotenv==1.1.1` - Environment variable management
 - `pytest==8.3.4` - Testing framework
 
@@ -61,7 +61,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.7)
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 prompt = PromptTemplate(...)
 chain = prompt | llm | StrOutputParser()
 answer = chain.invoke({"question": question})
@@ -254,11 +254,11 @@ enriched = "Summarize this document in 3 bullet points, focusing on technical im
 ```python
 # New (1.0.0a5)
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.7)
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 
 # Old (0.3.x)
-from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+from langchain_anthropic import ChatAnthropic
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 ```
 
 **Chain Syntax** (still uses LCEL):
@@ -287,7 +287,7 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 # Initialize LLM (alpha API)
-llm = init_chat_model("openai:gpt-4o-mini", temperature=0.7)
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 
 # Build chain with LCEL
 chain = prompt | llm | StrOutputParser()
@@ -300,19 +300,18 @@ result = chain.invoke({"input": value})
 
 | Chapter | LangChain Version | API Style |
 |---------|-------------------|-----------|
-| **Chapter 1** | 0.3.27 stable | `ChatOpenAI(...)` |
+| **Chapter 1** | 0.3.27 stable | `ChatAnthropic(...)` |
 | **Chapter 5** | 1.0.0a5 alpha | `init_chat_model(...)` |
 | **Chapter 6** | 1.0.0a5 alpha | `init_chat_model(...)` |
-| **Chapter 7** | 0.3.27 stable | `ChatOpenAI(...)` |
+| **Chapter 7** | 0.3.27 stable | `ChatAnthropic(...)` |
 
 ## Important Notes
 
 - **Always activate venv** before running scripts: `source venv/bin/activate`
-- **API Key Required**: All scripts require valid `OPENAI_API_KEY` in `.env`
+- **API Key Required**: All scripts require valid `ANTHROPIC_API_KEY` in `.env`
 - **Alpha Version**: LangChain 1.0.0a5 APIs may change before stable release
 - **Reference Repo**: `repo_langchain_1.0/` is for reference only, do not modify
-- **Model Selection**: Scripts use `gpt-4o-mini` by default (configurable)
-- **Temperature**: Set to `0.7` for balanced creativity/consistency
+- **Model Selection**: Scripts use `claude-opus-5-5` by default (configurable)
 - **Dependencies**: Uses LangChain 1.0.0a5 alpha (different from Chapters 1 and 7)
 
 ## Troubleshooting
@@ -329,13 +328,13 @@ result = chain.invoke({"input": value})
 
 **"No API key provided"**:
 - Ensure `.env` file exists in current directory
-- Check `OPENAI_API_KEY` is set correctly
+- Check `ANTHROPIC_API_KEY` is set correctly
 - Verify no trailing spaces in `.env` file
 
-**"Model 'openai:gpt-4o-mini' not found"**:
+**"Model 'anthropic:claude-opus-5-5' not found"**:
 - Alpha version uses `provider:model` format
-- Correct format: `"openai:gpt-4o-mini"`
-- Ensure OpenAI API key has access to model
+- Correct format: `"anthropic:claude-opus-5-5"`
+- Ensure Anthropic API key has access to model
 
 ## Best Practices
 
@@ -376,7 +375,7 @@ User Query
 - **LangChain**: 1.0.0a5 alpha (BREAKING CHANGES from 0.3.x)
 - **LangGraph**: 0.6.7 (graph-based workflows)
 - **LangSmith**: 0.4.29 (tracing and evaluation)
-- **OpenAI API**: Latest (tested with v1.108.0)
+- **Anthropic API**: Latest (tested with anthropic 0.125.0)
 - **PyTest**: 8.3.4 (testing framework)
 
 ## Migration Notes (from LangChain 0.3.x)
@@ -386,12 +385,12 @@ User Query
 **Model Initialization**:
 ```python
 # Chapter 1/7 (0.3.x)
-from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini")
+from langchain_anthropic import ChatAnthropic
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 
 # Chapter 6 (1.0.0a5)
 from langchain.chat_models import init_chat_model
-llm = init_chat_model("openai:gpt-4o-mini")
+llm = init_chat_model("anthropic:claude-opus-5-5", max_tokens=16000)
 ```
 
 **Chains** (LCEL unchanged):

@@ -49,7 +49,7 @@ pip install -r requirements.txt
 cp .env.example .env
 
 # Editar o arquivo .env e adicionar suas chaves
-# Minimamente necessário: OPENAI_API_KEY=sua_chave_aqui
+# Minimamente necessário: ANTHROPIC_API_KEY=sua_chave_aqui
 ```
 ## Dependências Principais
 

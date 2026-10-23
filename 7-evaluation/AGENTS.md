@@ -16,9 +16,9 @@ This is a comprehensive LLM evaluation project demonstrating systematic prompt e
 - `LANGCHAIN_TRACING_V2=true` - Enable LangSmith tracing
 - `LANGCHAIN_PROJECT` - Optional project name for LangSmith
 
-**OpenAI (required for all folders):**
+**Anthropic (required for all folders):**
 
-- `OPENAI_API_KEY` - OpenAI API key for running LLM calls
+- `ANTHROPIC_API_KEY` - Anthropic API key for running LLM calls
 
 **Langfuse (required only for folder 5-langfuse):**
 
@@ -28,8 +28,7 @@ This is a comprehensive LLM evaluation project demonstrating systematic prompt e
 
 **Model Configuration (optional):**
 
-- `LLM_MODEL` - Model name (default: gpt-4o-mini)
-- `LLM_TEMPERATURE` - Temperature value (default: 0)
+- `LLM_MODEL` - Model name (default: claude-opus-5-5)
 
 **Virtual Environment**:
 
@@ -43,7 +42,7 @@ pip install -r requirements.txt
 
 **Dependencies:**
 
-- langsmith langchain langchain-openai langchain-core langchain-community openai python-dotenv jsonschema numpy langfuse openevals pyyaml
+- langsmith langchain langchain-anthropic langchain-core langchain-community anthropic python-dotenv jsonschema numpy langfuse openevals pyyaml
 
 **Notes**:
 
@@ -239,7 +238,7 @@ The project uses a centralized `shared/` directory for common utilities:
 LLM and observability platform clients:
 
 - `get_openai_client()` - Returns OpenAI client with LangSmith tracing
-- `get_model_name()` - Get configured model (default: gpt-4o-mini, override with `LLM_MODEL`)
+- `get_model_name()` - Get configured model (default: claude-opus-5-5, override with `LLM_MODEL`)
 - `get_temperature()` - Get temperature (default: 0, override with `LLM_TEMPERATURE`)
 - `get_langsmith_client()` - Returns LangSmith Client instance
 - `get_langfuse_client()` - Returns Langfuse client instance

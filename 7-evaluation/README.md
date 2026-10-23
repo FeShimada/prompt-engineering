@@ -158,12 +158,11 @@ Criar arquivo `.env` na raiz:
 LANGSMITH_API_KEY=seu-api-key
 LANGCHAIN_TRACING_V2=true
 
-# OpenAI (todos os exemplos)
-OPENAI_API_KEY=seu-api-key
+# Anthropic (todos os exemplos)
+ANTHROPIC_API_KEY=seu-api-key
 
 # Opcional: Configuração do modelo
-LLM_MODEL=gpt-4o-mini
-LLM_TEMPERATURE=0
+LLM_MODEL=claude-opus-5-5
 
 # Langfuse (exemplo 5 - opcional)
 LANGFUSE_SECRET_KEY=sk-lf-...

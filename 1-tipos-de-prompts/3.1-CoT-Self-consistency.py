@@ -1,4 +1,4 @@
-from langchain_ollama import ChatOllama
+from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 from utils import print_llm_result
 
@@ -19,7 +19,7 @@ If there are 3 different answers, ONLY reply: "I can't find a consistent answer"
 """
 
 
-llm = ChatOllama(model="llama3.1")
+llm = ChatAnthropic(model="claude-opus-5-5", max_tokens=16000)
 
 
 response1 = llm.invoke(msg1)

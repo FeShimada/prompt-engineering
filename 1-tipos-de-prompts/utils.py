@@ -14,7 +14,7 @@ def print_llm_result(prompt, response):
 
     # Print response
     console.print(Text("LLM RESPONSE:", style="bold green"))
-    console.print(Text(response.content, style="bold blue"), end="\n\n")
+    console.print(Text(response.text(), style="bold blue"), end="\n\n")
 
     # Print token usage
     usage = response.usage_metadata
